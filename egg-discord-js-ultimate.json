@@ -1,0 +1,52 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-05-20T12:00:00+00:00",
+    "name": "Discord.js (Ultimate Canvas Support)",
+    "author": "support@pterodactyl.io",
+    "description": "Un Egg Node.js optimisé pour les bots Discord lourds. Inclut le support natif pour Canvas, FFmpeg, et les outils de compilation (Python/Make/G++) pour éviter les erreurs lors du npm install.",
+    "features": null,
+    "docker_images": {
+        "Node.js 22 (Recommandé)": "ghcr.io/parkervcp/yolks:nodejs_22",
+        "Node.js 20 (LTS)": "ghcr.io/parkervcp/yolks:nodejs_20",
+        "Node.js 18": "ghcr.io/parkervcp/yolks:nodejs_18"
+    },
+    "file_denylist": [],
+    "startup": "if [ -f /home/container/package.json ]; then npm install; fi; node {{BOT_JS_FILE}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"[Pterodactyl] Bot started successfully.\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\r\n# Script d'installation optimisé pour Canvas/FFmpeg\r\napt-get update\r\napt-get install -y git curl ffmpeg build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev\r\n\r\nmkdir -p /mnt/server\r\ncd /mnt/server\r\n\r\nif [ -f package.json ]; then\r\n    npm install --production\r\nfi",
+            "container": "ghcr.io/parkervcp/yolks:nodejs_20",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Fichier Principal du Bot",
+            "description": "Le nom de votre fichier de démarrage (ex: index.js, bot.js, main.js).",
+            "env_variable": "BOT_JS_FILE",
+            "default_value": "index.js",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20"
+        },
+        {
+            "name": "Paquets NPM Additionnels",
+            "description": "Installer des paquets globaux si nécessaire (laisser vide en général).",
+            "env_variable": "NPM_PACKAGES",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string"
+        }
+    ]
+}
