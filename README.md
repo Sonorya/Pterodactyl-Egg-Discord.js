@@ -1,0 +1,1 @@
+# Pterodactyl-Egg-Discord.js-Ultimate-Canvas-Support-
